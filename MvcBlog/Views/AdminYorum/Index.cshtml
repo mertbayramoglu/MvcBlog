@@ -1,0 +1,62 @@
+﻿@*@using PagedList
+@using PagedList.Mvc*@
+@model IEnumerable<MvcBlog.Models.Yorum>
+
+@{
+    ViewBag.Title = "Index";
+    Layout = "~/Views/Shared/_LayoutAdmin.cshtml";
+}
+
+<div class="container-fluid">
+    <div class="card-body">
+        <h2>Yorumlar</h2>
+        <table class="table">
+            <tr>
+                <th>     
+                    @Html.Label("İçerik")
+                </th>
+                <th>
+                    @Html.Label("Tarih")
+                </th>
+                <th>
+                    @Html.Label("Başlık")
+                </th>
+                <th>
+                    @Html.Label("Kullanıcı Adı")
+                </th>
+                <th></th>
+            </tr>
+
+            @foreach (var item in Model)
+            {
+                <tr>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.Icerik)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.Tarih)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.Makale.Baslik)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.UyeTablo.AdSoyad)
+                    </td>
+                    <td>
+                        @Html.ActionLink("Düzenle", "Edit", new { id = item.YorumId }) |
+                        @Html.ActionLink("Detay", "Details", new { id = item.YorumId }) |
+                        @Html.ActionLink("Sil", "Delete", new { id = item.YorumId })
+                    </td>
+                </tr>
+            }
+
+        </table>
+        <!-- Pagination -->
+        <div class="row">
+            <div class="col-md-8 text-center">
+                <div class="pagedList pagination">
+                    @*@Html.PagedListPager(Model, Page => Url.Action("Index", new { Page }), PagedListRenderOptions.Classic)*@
+                </div>
+            </div>
+        </div>
+</div></div>

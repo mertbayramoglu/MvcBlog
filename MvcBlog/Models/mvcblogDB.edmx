@@ -1,0 +1,461 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="3.0" xmlns:edmx="http://schemas.microsoft.com/ado/2009/11/edmx">
+  <!-- EF Runtime content -->
+  <edmx:Runtime>
+    <!-- SSDL content -->
+    <edmx:StorageModels>
+      <Schema Namespace="mvcblogEntities1.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+        <EntityType Name="Etiket">
+          <Key>
+            <PropertyRef Name="EtiketId" />
+          </Key>
+          <Property Name="EtiketId" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="EtiketAdi" Type="nvarchar" MaxLength="50" />
+        </EntityType>
+        <EntityType Name="Kategori">
+          <Key>
+            <PropertyRef Name="KategoriId" />
+          </Key>
+          <Property Name="KategoriId" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="KategoriAdi" Type="nvarchar" MaxLength="50" />
+        </EntityType>
+        <EntityType Name="Makale">
+          <Key>
+            <PropertyRef Name="MakaleId" />
+          </Key>
+          <Property Name="MakaleId" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="Baslik" Type="nvarchar" MaxLength="300" />
+          <Property Name="Icerik" Type="nvarchar(max)" />
+          <Property Name="Foto" Type="nvarchar(max)" />
+          <Property Name="Tarih" Type="datetime" />
+          <Property Name="KategoriId" Type="int" />
+          <Property Name="UyeId" Type="int" />
+          <Property Name="Okunma" Type="int" />
+        </EntityType>
+        <EntityType Name="MakaleEtiket">
+          <Key>
+            <PropertyRef Name="MakaleId" />
+            <PropertyRef Name="EtiketId" />
+          </Key>
+          <Property Name="MakaleId" Type="int" Nullable="false" />
+          <Property Name="EtiketId" Type="int" Nullable="false" />
+        </EntityType>
+        <EntityType Name="UyeTablo">
+          <Key>
+            <PropertyRef Name="UyeId" />
+          </Key>
+          <Property Name="UyeId" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="KullaniciAdi" Type="nvarchar" MaxLength="50" />
+          <Property Name="Email" Type="nvarchar" MaxLength="100" />
+          <Property Name="Sifre" Type="nvarchar" MaxLength="50" />
+          <Property Name="AdSoyad" Type="nvarchar" MaxLength="50" />
+          <Property Name="Foto" Type="nvarchar(max)" />
+          <Property Name="YetkiId" Type="int" />
+        </EntityType>
+        <EntityType Name="Yetki">
+          <Key>
+            <PropertyRef Name="YetkiId" />
+          </Key>
+          <Property Name="YetkiId" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="Yetkisi" Type="nvarchar" MaxLength="50" />
+        </EntityType>
+        <EntityType Name="Yorum">
+          <Key>
+            <PropertyRef Name="YorumId" />
+          </Key>
+          <Property Name="YorumId" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="Icerik" Type="nvarchar" MaxLength="300" />
+          <Property Name="UyeId" Type="int" />
+          <Property Name="MakaleId" Type="int" />
+          <Property Name="Tarih" Type="datetime" />
+        </EntityType>
+        <Association Name="FK_Makale_Kategori">
+          <End Role="Kategori" Type="Self.Kategori" Multiplicity="0..1" />
+          <End Role="Makale" Type="Self.Makale" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Kategori">
+              <PropertyRef Name="KategoriId" />
+            </Principal>
+            <Dependent Role="Makale">
+              <PropertyRef Name="KategoriId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Makale_UyeTablo">
+          <End Role="UyeTablo" Type="Self.UyeTablo" Multiplicity="0..1" />
+          <End Role="Makale" Type="Self.Makale" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="UyeTablo">
+              <PropertyRef Name="UyeId" />
+            </Principal>
+            <Dependent Role="Makale">
+              <PropertyRef Name="UyeId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_MakaleEtiket_Etiket">
+          <End Role="Etiket" Type="Self.Etiket" Multiplicity="1" />
+          <End Role="MakaleEtiket" Type="Self.MakaleEtiket" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Etiket">
+              <PropertyRef Name="EtiketId" />
+            </Principal>
+            <Dependent Role="MakaleEtiket">
+              <PropertyRef Name="EtiketId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_MakaleEtiket_Makale">
+          <End Role="Makale" Type="Self.Makale" Multiplicity="1" />
+          <End Role="MakaleEtiket" Type="Self.MakaleEtiket" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Makale">
+              <PropertyRef Name="MakaleId" />
+            </Principal>
+            <Dependent Role="MakaleEtiket">
+              <PropertyRef Name="MakaleId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_UyeTablo_Yetki">
+          <End Role="Yetki" Type="Self.Yetki" Multiplicity="0..1" />
+          <End Role="UyeTablo" Type="Self.UyeTablo" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Yetki">
+              <PropertyRef Name="YetkiId" />
+            </Principal>
+            <Dependent Role="UyeTablo">
+              <PropertyRef Name="YetkiId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Yorum_Makale">
+          <End Role="Makale" Type="Self.Makale" Multiplicity="0..1" />
+          <End Role="Yorum" Type="Self.Yorum" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Makale">
+              <PropertyRef Name="MakaleId" />
+            </Principal>
+            <Dependent Role="Yorum">
+              <PropertyRef Name="MakaleId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Yorum_UyeTablo">
+          <End Role="UyeTablo" Type="Self.UyeTablo" Multiplicity="0..1" />
+          <End Role="Yorum" Type="Self.Yorum" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="UyeTablo">
+              <PropertyRef Name="UyeId" />
+            </Principal>
+            <Dependent Role="Yorum">
+              <PropertyRef Name="UyeId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityContainer Name="mvcblogEntities1StoreContainer">
+          <EntitySet Name="Etiket" EntityType="Self.Etiket" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Kategori" EntityType="Self.Kategori" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Makale" EntityType="Self.Makale" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="MakaleEtiket" EntityType="Self.MakaleEtiket" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="UyeTablo" EntityType="Self.UyeTablo" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Yetki" EntityType="Self.Yetki" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Yorum" EntityType="Self.Yorum" Schema="dbo" store:Type="Tables" />
+          <AssociationSet Name="FK_Makale_Kategori" Association="Self.FK_Makale_Kategori">
+            <End Role="Kategori" EntitySet="Kategori" />
+            <End Role="Makale" EntitySet="Makale" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Makale_UyeTablo" Association="Self.FK_Makale_UyeTablo">
+            <End Role="UyeTablo" EntitySet="UyeTablo" />
+            <End Role="Makale" EntitySet="Makale" />
+          </AssociationSet>
+          <AssociationSet Name="FK_MakaleEtiket_Etiket" Association="Self.FK_MakaleEtiket_Etiket">
+            <End Role="Etiket" EntitySet="Etiket" />
+            <End Role="MakaleEtiket" EntitySet="MakaleEtiket" />
+          </AssociationSet>
+          <AssociationSet Name="FK_MakaleEtiket_Makale" Association="Self.FK_MakaleEtiket_Makale">
+            <End Role="Makale" EntitySet="Makale" />
+            <End Role="MakaleEtiket" EntitySet="MakaleEtiket" />
+          </AssociationSet>
+          <AssociationSet Name="FK_UyeTablo_Yetki" Association="Self.FK_UyeTablo_Yetki">
+            <End Role="Yetki" EntitySet="Yetki" />
+            <End Role="UyeTablo" EntitySet="UyeTablo" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Yorum_Makale" Association="Self.FK_Yorum_Makale">
+            <End Role="Makale" EntitySet="Makale" />
+            <End Role="Yorum" EntitySet="Yorum" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Yorum_UyeTablo" Association="Self.FK_Yorum_UyeTablo">
+            <End Role="UyeTablo" EntitySet="UyeTablo" />
+            <End Role="Yorum" EntitySet="Yorum" />
+          </AssociationSet>
+        </EntityContainer>
+      </Schema>
+    </edmx:StorageModels>
+    <!-- CSDL content -->
+    <edmx:ConceptualModels>
+      <Schema Namespace="mvcblogEntities1" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
+        <EntityType Name="Etiket">
+          <Key>
+            <PropertyRef Name="EtiketId" />
+          </Key>
+          <Property Name="EtiketId" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="EtiketAdi" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <NavigationProperty Name="Makales" Relationship="Self.MakaleEtiket" FromRole="Etiket" ToRole="Makale" />
+        </EntityType>
+        <EntityType Name="Kategori">
+          <Key>
+            <PropertyRef Name="KategoriId" />
+          </Key>
+          <Property Name="KategoriId" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="KategoriAdi" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <NavigationProperty Name="Makales" Relationship="Self.FK_Makale_Kategori" FromRole="Kategori" ToRole="Makale" />
+        </EntityType>
+        <EntityType Name="Makale">
+          <Key>
+            <PropertyRef Name="MakaleId" />
+          </Key>
+          <Property Name="MakaleId" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Baslik" Type="String" MaxLength="300" FixedLength="false" Unicode="true" />
+          <Property Name="Icerik" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="Foto" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="Tarih" Type="DateTime" Precision="3" />
+          <Property Name="KategoriId" Type="Int32" />
+          <Property Name="UyeId" Type="Int32" />
+          <Property Name="Okunma" Type="Int32" />
+          <NavigationProperty Name="Kategori" Relationship="Self.FK_Makale_Kategori" FromRole="Makale" ToRole="Kategori" />
+          <NavigationProperty Name="UyeTablo" Relationship="Self.FK_Makale_UyeTablo" FromRole="Makale" ToRole="UyeTablo" />
+          <NavigationProperty Name="Yorums" Relationship="Self.FK_Yorum_Makale" FromRole="Makale" ToRole="Yorum" />
+          <NavigationProperty Name="Etikets" Relationship="Self.MakaleEtiket" FromRole="Makale" ToRole="Etiket" />
+        </EntityType>
+        <EntityType Name="UyeTablo">
+          <Key>
+            <PropertyRef Name="UyeId" />
+          </Key>
+          <Property Name="UyeId" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="KullaniciAdi" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="Email" Type="String" MaxLength="100" FixedLength="false" Unicode="true" />
+          <Property Name="Sifre" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="AdSoyad" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="Foto" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="YetkiId" Type="Int32" />
+          <NavigationProperty Name="Makales" Relationship="Self.FK_Makale_UyeTablo" FromRole="UyeTablo" ToRole="Makale" />
+          <NavigationProperty Name="Yetki" Relationship="Self.FK_UyeTablo_Yetki" FromRole="UyeTablo" ToRole="Yetki" />
+          <NavigationProperty Name="Yorums" Relationship="Self.FK_Yorum_UyeTablo" FromRole="UyeTablo" ToRole="Yorum" />
+        </EntityType>
+        <EntityType Name="Yetki">
+          <Key>
+            <PropertyRef Name="YetkiId" />
+          </Key>
+          <Property Name="YetkiId" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Yetkisi" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <NavigationProperty Name="UyeTabloes" Relationship="Self.FK_UyeTablo_Yetki" FromRole="Yetki" ToRole="UyeTablo" />
+        </EntityType>
+        <EntityType Name="Yorum">
+          <Key>
+            <PropertyRef Name="YorumId" />
+          </Key>
+          <Property Name="YorumId" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Icerik" Type="String" MaxLength="300" FixedLength="false" Unicode="true" />
+          <Property Name="UyeId" Type="Int32" />
+          <Property Name="MakaleId" Type="Int32" />
+          <Property Name="Tarih" Type="DateTime" Precision="3" />
+          <NavigationProperty Name="Makale" Relationship="Self.FK_Yorum_Makale" FromRole="Yorum" ToRole="Makale" />
+          <NavigationProperty Name="UyeTablo" Relationship="Self.FK_Yorum_UyeTablo" FromRole="Yorum" ToRole="UyeTablo" />
+        </EntityType>
+        <Association Name="FK_Makale_Kategori">
+          <End Role="Kategori" Type="Self.Kategori" Multiplicity="0..1" />
+          <End Role="Makale" Type="Self.Makale" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Kategori">
+              <PropertyRef Name="KategoriId" />
+            </Principal>
+            <Dependent Role="Makale">
+              <PropertyRef Name="KategoriId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Makale_UyeTablo">
+          <End Role="UyeTablo" Type="Self.UyeTablo" Multiplicity="0..1" />
+          <End Role="Makale" Type="Self.Makale" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="UyeTablo">
+              <PropertyRef Name="UyeId" />
+            </Principal>
+            <Dependent Role="Makale">
+              <PropertyRef Name="UyeId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Yorum_Makale">
+          <End Role="Makale" Type="Self.Makale" Multiplicity="0..1" />
+          <End Role="Yorum" Type="Self.Yorum" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Makale">
+              <PropertyRef Name="MakaleId" />
+            </Principal>
+            <Dependent Role="Yorum">
+              <PropertyRef Name="MakaleId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_UyeTablo_Yetki">
+          <End Role="Yetki" Type="Self.Yetki" Multiplicity="0..1" />
+          <End Role="UyeTablo" Type="Self.UyeTablo" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Yetki">
+              <PropertyRef Name="YetkiId" />
+            </Principal>
+            <Dependent Role="UyeTablo">
+              <PropertyRef Name="YetkiId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Yorum_UyeTablo">
+          <End Role="UyeTablo" Type="Self.UyeTablo" Multiplicity="0..1" />
+          <End Role="Yorum" Type="Self.Yorum" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="UyeTablo">
+              <PropertyRef Name="UyeId" />
+            </Principal>
+            <Dependent Role="Yorum">
+              <PropertyRef Name="UyeId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="MakaleEtiket">
+          <End Role="Etiket" Type="Self.Etiket" Multiplicity="*" />
+          <End Role="Makale" Type="Self.Makale" Multiplicity="*" />
+        </Association>
+        <EntityContainer Name="mvcblogEntities" annotation:LazyLoadingEnabled="true">
+          <EntitySet Name="Etikets" EntityType="Self.Etiket" />
+          <EntitySet Name="Kategoris" EntityType="Self.Kategori" />
+          <EntitySet Name="Makales" EntityType="Self.Makale" />
+          <EntitySet Name="UyeTabloes" EntityType="Self.UyeTablo" />
+          <EntitySet Name="Yetkis" EntityType="Self.Yetki" />
+          <EntitySet Name="Yorums" EntityType="Self.Yorum" />
+          <AssociationSet Name="FK_Makale_Kategori" Association="Self.FK_Makale_Kategori">
+            <End Role="Kategori" EntitySet="Kategoris" />
+            <End Role="Makale" EntitySet="Makales" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Makale_UyeTablo" Association="Self.FK_Makale_UyeTablo">
+            <End Role="UyeTablo" EntitySet="UyeTabloes" />
+            <End Role="Makale" EntitySet="Makales" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Yorum_Makale" Association="Self.FK_Yorum_Makale">
+            <End Role="Makale" EntitySet="Makales" />
+            <End Role="Yorum" EntitySet="Yorums" />
+          </AssociationSet>
+          <AssociationSet Name="FK_UyeTablo_Yetki" Association="Self.FK_UyeTablo_Yetki">
+            <End Role="Yetki" EntitySet="Yetkis" />
+            <End Role="UyeTablo" EntitySet="UyeTabloes" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Yorum_UyeTablo" Association="Self.FK_Yorum_UyeTablo">
+            <End Role="UyeTablo" EntitySet="UyeTabloes" />
+            <End Role="Yorum" EntitySet="Yorums" />
+          </AssociationSet>
+          <AssociationSet Name="MakaleEtiket" Association="Self.MakaleEtiket">
+            <End Role="Etiket" EntitySet="Etikets" />
+            <End Role="Makale" EntitySet="Makales" />
+          </AssociationSet>
+        </EntityContainer>
+      </Schema>
+    </edmx:ConceptualModels>
+    <!-- C-S mapping content -->
+    <edmx:Mappings>
+      <Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
+        <EntityContainerMapping StorageEntityContainer="mvcblogEntities1StoreContainer" CdmEntityContainer="mvcblogEntities">
+          <EntitySetMapping Name="Etikets">
+            <EntityTypeMapping TypeName="mvcblogEntities1.Etiket">
+              <MappingFragment StoreEntitySet="Etiket">
+                <ScalarProperty Name="EtiketId" ColumnName="EtiketId" />
+                <ScalarProperty Name="EtiketAdi" ColumnName="EtiketAdi" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Kategoris">
+            <EntityTypeMapping TypeName="mvcblogEntities1.Kategori">
+              <MappingFragment StoreEntitySet="Kategori">
+                <ScalarProperty Name="KategoriId" ColumnName="KategoriId" />
+                <ScalarProperty Name="KategoriAdi" ColumnName="KategoriAdi" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Makales">
+            <EntityTypeMapping TypeName="mvcblogEntities1.Makale">
+              <MappingFragment StoreEntitySet="Makale">
+                <ScalarProperty Name="MakaleId" ColumnName="MakaleId" />
+                <ScalarProperty Name="Baslik" ColumnName="Baslik" />
+                <ScalarProperty Name="Icerik" ColumnName="Icerik" />
+                <ScalarProperty Name="Foto" ColumnName="Foto" />
+                <ScalarProperty Name="Tarih" ColumnName="Tarih" />
+                <ScalarProperty Name="KategoriId" ColumnName="KategoriId" />
+                <ScalarProperty Name="UyeId" ColumnName="UyeId" />
+                <ScalarProperty Name="Okunma" ColumnName="Okunma" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="UyeTabloes">
+            <EntityTypeMapping TypeName="mvcblogEntities1.UyeTablo">
+              <MappingFragment StoreEntitySet="UyeTablo">
+                <ScalarProperty Name="UyeId" ColumnName="UyeId" />
+                <ScalarProperty Name="KullaniciAdi" ColumnName="KullaniciAdi" />
+                <ScalarProperty Name="Email" ColumnName="Email" />
+                <ScalarProperty Name="Sifre" ColumnName="Sifre" />
+                <ScalarProperty Name="AdSoyad" ColumnName="AdSoyad" />
+                <ScalarProperty Name="Foto" ColumnName="Foto" />
+                <ScalarProperty Name="YetkiId" ColumnName="YetkiId" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Yetkis">
+            <EntityTypeMapping TypeName="mvcblogEntities1.Yetki">
+              <MappingFragment StoreEntitySet="Yetki">
+                <ScalarProperty Name="YetkiId" ColumnName="YetkiId" />
+                <ScalarProperty Name="Yetkisi" ColumnName="Yetkisi" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Yorums">
+            <EntityTypeMapping TypeName="mvcblogEntities1.Yorum">
+              <MappingFragment StoreEntitySet="Yorum">
+                <ScalarProperty Name="YorumId" ColumnName="YorumId" />
+                <ScalarProperty Name="Icerik" ColumnName="Icerik" />
+                <ScalarProperty Name="UyeId" ColumnName="UyeId" />
+                <ScalarProperty Name="MakaleId" ColumnName="MakaleId" />
+                <ScalarProperty Name="Tarih" ColumnName="Tarih" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <AssociationSetMapping Name="MakaleEtiket" TypeName="mvcblogEntities1.MakaleEtiket" StoreEntitySet="MakaleEtiket">
+            <EndProperty Name="Etiket">
+              <ScalarProperty Name="EtiketId" ColumnName="EtiketId" />
+            </EndProperty>
+            <EndProperty Name="Makale">
+              <ScalarProperty Name="MakaleId" ColumnName="MakaleId" />
+            </EndProperty>
+          </AssociationSetMapping>
+        </EntityContainerMapping>
+      </Mapping>
+    </edmx:Mappings>
+  </edmx:Runtime>
+  <!-- EF Designer content (DO NOT EDIT MANUALLY BELOW HERE) -->
+  <Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
+    <Connection>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="MetadataArtifactProcessing" Value="EmbedInOutputAssembly" />
+      </DesignerInfoPropertySet>
+    </Connection>
+    <Options>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="ValidateOnBuild" Value="true" />
+        <DesignerProperty Name="EnablePluralization" Value="true" />
+        <DesignerProperty Name="IncludeForeignKeysInModel" Value="true" />
+        <DesignerProperty Name="UseLegacyProvider" Value="false" />
+        <DesignerProperty Name="CodeGenerationStrategy" Value="None" />
+      </DesignerInfoPropertySet>
+    </Options>
+    <!-- Diagram content (shape and connector positions) -->
+    <Diagrams></Diagrams>
+  </Designer>
+</edmx:Edmx>

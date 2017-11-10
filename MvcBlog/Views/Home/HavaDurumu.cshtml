@@ -1,0 +1,32 @@
+﻿
+@{
+    ViewBag.Title = "HavaDurumu";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+@{
+    Layout = null;
+}
+<html>
+<head>
+    <title>Index</title>
+</head>
+<body>
+    <div>
+        Baslik : @ViewBag.Baslik
+    </div>
+    <div>
+        Html Baslik : @ViewBag.HtmlBaslik
+    </div>
+    <div>
+        Html Baslik2 : @ViewBag.HtmlBaslik2
+    </div>
+
+    <a class="btn btn-success">Verileri Yükle</a>
+    @Ajax.ActionLink("Verileri Yükle", "LoadData", null, new AjaxOptions() { HttpMethod = "GET", UpdateTargetId = "Liste", InsertionMode = InsertionMode.Replace }, new { @class = "btn btn-success" });
+    <hr />
+    <ul id="liste" class="list-group">
+
+    </ul> 
+</body>
+</html>

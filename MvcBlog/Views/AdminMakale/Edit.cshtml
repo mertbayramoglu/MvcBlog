@@ -1,0 +1,81 @@
+﻿@model MvcBlog.Models.Makale
+
+@{
+    ViewBag.Title = "Edit";
+    Layout = "~/Views/Shared/_LayoutAdmin.cshtml";
+}
+
+<div class="container-fluid">
+    <div class="card-body">
+        <h2>Makale Düzenle</h2>
+
+        @using (Html.BeginForm("Edit", "AdminMakale", FormMethod.Post, new { enctype = "multipart/form-data" }))
+        {
+            @Html.AntiForgeryToken()
+
+            <div class="form-horizontal">
+                <h4>Makale</h4>
+                <hr />
+                @Html.ValidationSummary(true)
+                @Html.HiddenFor(model => model.MakaleId)
+
+                <div class="form-group">
+                    @Html.LabelFor(model => model.KategoriId, "KategoriId", new { @class = "control-label col-md-2" })
+                    <div class="col-md-10">
+                        @Html.DropDownList("KategoriId", String.Empty)
+                        @Html.ValidationMessageFor(model => model.KategoriId)
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    @Html.LabelFor(model => model.Baslik, new { @class = "control-label col-md-2" })
+                    <div class="col-md-10">
+                        @Html.EditorFor(model => model.Baslik)
+                        @Html.ValidationMessageFor(model => model.Baslik)
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    @Html.LabelFor(model => model.Icerik, new { @class = "control-label col-md-2" })
+                    <div class="col-md-10">
+                        @Html.EditorFor(model => model.Icerik)
+                        @Html.ValidationMessageFor(model => model.Icerik)
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    @Html.Label("Geçerli Foto", new { @class = "control-label col-md-2" })
+                    <div class="col-md-10">
+                        <img width="75" src="@Model.Foto" alt="" />
+                        @Html.ValidationMessageFor(model => model.Foto)
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    @Html.LabelFor(model => model.Foto, new { @class = "control-label col-md-2" })
+                    <div class="col-md-10">
+                        <input type="file" name="Foto" id="Foto" accept=".jpg,.jpeg,.png,.svg,.bmp,.gif,.JPEG,.PNG" class="form-control" />
+                        @Html.ValidationMessageFor(model => model.Foto)
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    @Html.LabelFor(model => model.Tarih, new { @class = "control-label col-md-2" })
+                    <div class="col-md-10">
+                        @Html.EditorFor(model => model.Tarih)
+                        @Html.ValidationMessageFor(model => model.Tarih)
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    <div class="col-md-offset-2 col-md-10">
+                        <input type="submit" value="Kaydet" class="btn btn-default" />
+                    </div>
+                </div>
+            </div>
+        }
+
+        <div>
+            @Html.ActionLink("Geri Dön", "Index")
+        </div>
+</div></div>

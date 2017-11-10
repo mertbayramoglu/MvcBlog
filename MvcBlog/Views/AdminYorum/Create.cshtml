@@ -1,0 +1,63 @@
+﻿@model MvcBlog.Models.Yorum
+
+@{
+    ViewBag.Title = "Create";
+    Layout = "~/Views/Shared/_LayoutAdmin.cshtml";
+}
+
+<div class="container-fluid">
+    <div class="card-body">
+        <h2>Yeni Yorum Yarat</h2>
+
+        @using (Html.BeginForm())
+        {
+            @Html.AntiForgeryToken()
+
+            <div class="form-horizontal">
+                <hr />
+                @Html.ValidationSummary(true)
+
+                <div class="form-group">
+                    @Html.LabelFor(model => model.Icerik, new { @class = "control-label col-md-2" })
+                    <div class="col-md-10">
+                        @Html.EditorFor(model => model.Icerik)
+                        @Html.ValidationMessageFor(model => model.Icerik)
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    @Html.LabelFor(model => model.UyeId, "UyeId", new { @class = "control-label col-md-2" })
+                    <div class="col-md-10">
+                        @Html.DropDownList("UyeId", String.Empty)
+                        @Html.ValidationMessageFor(model => model.UyeId)
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    @Html.LabelFor(model => model.MakaleId, "MakaleId", new { @class = "control-label col-md-2" })
+                    <div class="col-md-10">
+                        @Html.DropDownList("MakaleId", String.Empty)
+                        @Html.ValidationMessageFor(model => model.MakaleId)
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    @Html.LabelFor(model => model.Tarih, new { @class = "control-label col-md-2" })
+                    <div class="col-md-10">
+                        @Html.EditorFor(model => model.Tarih)
+                        @Html.ValidationMessageFor(model => model.Tarih)
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    <div class="col-md-offset-2 col-md-10">
+                        <input type="submit" value="Create" class="btn btn-default" />
+                    </div>
+                </div>
+            </div>
+        }
+
+        <div>
+            @Html.ActionLink("Back to List", "Index")
+        </div>
+</div></div>

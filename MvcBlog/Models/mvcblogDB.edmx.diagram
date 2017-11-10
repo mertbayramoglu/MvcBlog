@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="3.0" xmlns:edmx="http://schemas.microsoft.com/ado/2009/11/edmx">
+ <!-- EF Designer content (DO NOT EDIT MANUALLY BELOW HERE) -->
+  <edmx:Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
+    <!-- Diagram content (shape and connector positions) -->
+    <edmx:Diagrams>
+      <Diagram DiagramId="3b0aa4953e4f41d6bfa03aafd9f2a1e7" Name="Diagram1">
+        <EntityTypeShape EntityType="mvcblogEntities1.Etiket" Width="1.5" PointX="3" PointY="5" IsExpanded="true" />
+        <EntityTypeShape EntityType="mvcblogEntities1.Kategori" Width="1.5" PointX="3" PointY="7.375" IsExpanded="true" />
+        <EntityTypeShape EntityType="mvcblogEntities1.Makale" Width="1.5" PointX="5.25" PointY="1" IsExpanded="true" />
+        <EntityTypeShape EntityType="mvcblogEntities1.UyeTablo" Width="1.5" PointX="3" PointY="1.125" IsExpanded="true" />
+        <EntityTypeShape EntityType="mvcblogEntities1.Yetki" Width="1.5" PointX="0.75" PointY="1.875" IsExpanded="true" />
+        <EntityTypeShape EntityType="mvcblogEntities1.Yorum" Width="1.5" PointX="7.5" PointY="1.5" IsExpanded="true" />
+        <AssociationConnector Association="mvcblogEntities1.FK_Makale_Kategori" ManuallyRouted="false" />
+        <AssociationConnector Association="mvcblogEntities1.FK_Makale_UyeTablo" ManuallyRouted="false" />
+        <AssociationConnector Association="mvcblogEntities1.FK_Yorum_Makale" ManuallyRouted="false" />
+        <AssociationConnector Association="mvcblogEntities1.FK_UyeTablo_Yetki" ManuallyRouted="false" />
+        <AssociationConnector Association="mvcblogEntities1.FK_Yorum_UyeTablo" ManuallyRouted="false" />
+        <AssociationConnector Association="mvcblogEntities1.MakaleEtiket" ManuallyRouted="false" />
+      </Diagram>
+    </edmx:Diagrams>
+  </edmx:Designer>
+</edmx:Edmx>

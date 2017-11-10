@@ -1,0 +1,17 @@
+﻿@model IEnumerable<MvcBlog.Models.Makale>
+
+@{
+    Layout = null;
+}
+<h5 class="card-header">Çok Okunanlar</h5>
+
+<div class="row">
+    <div class="col-lg-12">
+        <ul class="list-unstyled card-body">
+            @foreach (var item in Model)
+            {
+                <li class="list-group-item"><a href="/Home/MakaleDetay/@item.MakaleId">@item.Baslik</a>(@item.Okunma)</li>
+            }
+        </ul>
+    </div>
+</div>

@@ -1,0 +1,72 @@
+﻿@model MvcBlog.Models.UyeTablo
+
+@{
+    ViewBag.Title = "Edit";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<h2>Üye Bilgi Güncelleme</h2>
+
+@using (Html.BeginForm("Edit", "Uye", FormMethod.Post, new { enctype = "multipart/form-data" }))
+{
+    @Html.AntiForgeryToken()
+    
+    <div>
+        <hr />
+        @Html.ValidationSummary(true)
+        @Html.HiddenFor(model => model.UyeId)
+
+        <div class="form-group">
+            @Html.Label("Profil Foto", new { @class = "control-label col-md-2" })
+            <div class="col-md-10">
+                <img width="75" src="@Model.Foto" class="img-thumbnail" alt="" />
+                @Html.ValidationMessageFor(model => model.Foto)
+            </div>
+        </div>
+        <div class="form-group">
+            @Html.LabelFor(model => model.Foto, new { @class = "control-label col-md-2" })
+            <div class="col-md-10">
+                <input type="file" name="Foto" id="Foto" accept=".jpg,.jpeg,.png,.svg,.bmp,.gif,.JPEG,.PNG" class="form-control" />
+                @Html.ValidationMessageFor(model => model.Foto)
+            </div>
+        </div>
+        <div class="form-group">
+            @Html.LabelFor(model => model.KullaniciAdi, new { @class = "control-label col-md-2"})
+            <div class="col-md-10">
+                @Html.EditorFor(model => model.KullaniciAdi)
+                @Html.ValidationMessageFor(model => model.KullaniciAdi)
+            </div>
+        </div>
+        <div class="form-group">
+            @Html.LabelFor(model => model.AdSoyad, new { @class = "control-label col-md-2" })
+            <div class="col-md-10">
+                @Html.EditorFor(model => model.AdSoyad)
+                @Html.ValidationMessageFor(model => model.AdSoyad)
+            </div>
+        </div>
+        <div class="form-group">
+            @Html.LabelFor(model => model.Email, new { @class = "control-label col-md-2" })
+            <div class="col-md-10">
+                @Html.EditorFor(model => model.Email)
+                @Html.ValidationMessageFor(model => model.Email)
+            </div>
+        </div>
+
+        <div class="form-group">
+            @Html.LabelFor(model => model.Sifre, new { @class = "control-label col-md-2" })
+            <div class="col-md-10">
+                @Html.EditorFor(model => model.Sifre)
+                @Html.ValidationMessageFor(model => model.Sifre)
+            </div>
+        </div>
+        <div class="form-group">
+            <div class="col-md-offset-2 col-md-10">
+                <input type="submit" value="Güncelle" class="btn btn-default" />
+            </div>
+        </div>
+    </div>
+}
+
+<div>
+    @Html.ActionLink("Geri Dön", "Index")
+</div>

@@ -1,0 +1,79 @@
+﻿@*@using PagedList
+@using PagedList.Mvc*@
+@model IEnumerable<MvcBlog.Models.UyeTablo>
+
+@{
+    ViewBag.Title = "Index";
+    Layout = "~/Views/Shared/_LayoutAdmin.cshtml";
+}
+
+<div class="container-fluid">
+<div class="card-body">
+    <h2>Admin Üye Yönetimi</h2>
+    <hr />
+    <button class="button font-weight-bold">
+        @Html.ActionLink("Yeni Üye Oluştur", "Create")
+    </button>
+    <hr />
+    <table class="table">
+        <tr>
+            <th>
+                @Html.Label("Kullanıcı Adı")
+            </th>
+            <th>
+                @Html.Label("E-Mail")
+            </th>
+            <th>
+                @Html.Label("Şifre")
+            </th>
+            <th>
+                @Html.Label("Ad Soyad")
+            </th>
+            <th>
+               @Html.Label("Üye Foto")
+            </th>
+            <th>
+                @Html.Label("Yetkisi")
+            </th>
+            <th></th>
+        </tr>
+
+        @foreach (var item in Model)
+        {
+            <tr>
+                <td>
+                    @Html.DisplayFor(modelItem => item.KullaniciAdi)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Email)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Sifre)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.AdSoyad)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Foto)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Yetki.Yetkisi)
+                </td>
+                <td>
+                    @Html.ActionLink("Edit", "Edit", new { id = item.UyeId }) |
+                    @Html.ActionLink("Details", "Details", new { id = item.UyeId }) |
+                    @Html.ActionLink("Delete", "Delete", new { id = item.UyeId })
+                </td>
+            </tr>
+        }
+
+    </table>
+    <!-- Pagination -->
+    <div class="row">
+        <div class="col-md-8 text-center">
+            <div class="pagedList pagination">
+                @*@Html.PagedListPager(Model, Page => Url.Action("Index", new { Page }), PagedListRenderOptions.Classic)*@
+            </div>
+        </div>
+    </div>
+</div></div>
